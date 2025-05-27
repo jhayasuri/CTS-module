@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Local Community Event Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5dc; /* Richer light beige */
+      text-align: center; /* Center body content */
+    }
+    nav {
+      background: #543827; /* Deep rich brown */
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #welcomeBanner {
+      background-color: #FFD700; /* Rich gold */
+      color: white;
+      padding: 20px;
+      font-size: 1.5em;
+    }
+    .highlight {
+      background-color: #FFC107; /* Softer gold/amber */
+      padding: 5px 10px; /* Add some padding */
+      border-radius: 5px; /* Slightly rounded corners */
+      display: inline-block; /* Allow padding to apply */
+    }
+    section h2, section h3 {
+      text-align: center; /* Ensure all section headings are centered */
+      margin-top: 30px; /* Add more space above headings */
+      margin-bottom: 20px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd; /* Add a subtle border to the table */
+    }
+    td {
+      padding: 15px; /* More padding in table cells */
+      text-align: center; /* Center content within table cells */
+    }
+    .event {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border: 3px solid #777; /* Slightly lighter gray */
+      padding: 5px;
+      transition: transform 0.3s ease;
+      display: block; /* Ensures margin auto works for centering if needed */
+      margin: 0 auto; /* Center images within cells */
+    }
+    .event:hover {
+      transform: scale(1.05);
+      border-color: #FFD700; /* Rich gold on hover */
+    }
+    form {
+      background: #FAF0E6; /* Very light beige */
+      padding: 25px; /* Increased padding */
+      margin: 20px auto;
+      width: 90%;
+      max-width: 450px; /* Slightly wider form */
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15); /* Stronger shadow */
+      text-align: left;
+      display: flex; /* Use flexbox for form elements */
+      flex-direction: column; /* Stack elements vertically */
+      gap: 12px; /* Space between form elements */
+    }
+    form label {
+      display: block;
+      margin-bottom: 0; /* Managed by gap */
+      font-weight: bold;
+      color: #333; /* Darker label color for readability */
+    }
+    form input, form select, form textarea, form button {
+      width: 100%;
+      padding: 10px; /* Larger padding for inputs */
+      box-sizing: border-box;
+      border: 1px solid #ccc; /* Subtle border */
+      border-radius: 4px; /* Rounded input corners */
+      margin-bottom: 0; /* Managed by gap */
+    }
+    form button {
+      background-color: #543827; /* Match nav background */
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      padding: 12px; /* More padding for buttons */
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #7a543e; /* Slightly lighter on hover */
+    }
+    video {
+      width: 100%; /* Make video responsive */
+      max-width: 500px; /* Limit video width */
+      margin: 30px auto; /* More margin around video */
+      display: block;
+      border-radius: 8px; /* Rounded corners for video */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for video */
+    }
+    #charCount {
+      font-weight: bold;
+      color: #FFD700; /* Rich gold */
+    }
+    footer {
+      background: #111; /* Even darker gray */
+      color: white;
+      padding: 15px; /* More padding in footer */
+      margin-top: 40px; /* More space above footer */
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body onbeforeunload="return warnUser()">
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="help.html" target="_blank">Help</a>
+  </nav>
+
+  <section id="home">
+    <div id="welcomeBanner">
+      Welcome to the Local Community Event Portal!
+      <br>
+      <span style="color: red; font-weight: bold;">Special Offer: Free entry for first 100 users!</span>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2 class="highlight">Community Event Gallery</h2>
+    <table>
+      <caption>Photos from Previous Events</caption>
+      <tr>
+        <td><img class="event" src="event1.jpg" alt="Event 1" title="Music Night" ondblclick="enlarge(this)"></td>
+        <td><img class="event" src="event2.jpg" alt="Event 2" title="Food Fest" ondblclick="enlarge(this)"></td>
+        <td><img class="event" src="event3.jpg" alt="Event 3" title="Art Fair" ondblclick="enlarge(this)"></td>
+      </tr>
+      <tr>
+        <td><img class="event" src="event4.jpg" alt="Event 4" title="Tech Meetup" ondblclick="enlarge(this)"></td>
+        <td><img class="event" src="event5.jpg" alt="Event 5" title="Book Club" ondblclick="enlarge(this)"></td>
+        <td><img class="event" src="event6.jpg" alt="Event 6" title="Charity Run" ondblclick="enlarge(this)"></td>
+      </tr>
+    </table>
+
+    <h3>Event Registration</h3>
+    <form onsubmit="showConfirmation(); return false;">
+      <label>Name:</label>
+      <input type="text" placeholder="Your Name" required autofocus>
+      <label>Email:</label>
+      <input type="email" placeholder="Email Address" required>
+      <label>Date:</label>
+      <input type="date" required>
+      <label>Event Type:</label>
+      <select id="eventType" onchange="savePreference(this)">
+        <option value="">Select Event Type</option>
+        <option value="Music">Music</option>
+        <option value="Food">Food</option>
+        <option value="Tech">Tech</option>
+      </select>
+      <label>Message:</label>
+      <textarea placeholder="Your Message"></textarea>
+      <label>Phone:</label>
+      <input type="tel" id="phone" placeholder="Phone Number" onblur="validatePhone(this)">
+      <output id="confirmation"></output><br>
+      <button type="submit" onclick="showConfirmation()">Register</button>
+      <button type="button" onclick="clearPreferences()">Clear Preferences</button>
+    </form>
+  </section>
+
+  <section>
+    <h3>Watch Our Event Promo</h3>
+    <video controls oncanplay="videoReady()">
+      <source src="promo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div id="videoMsg"></div>
+  </section>
+
+  <section id="contact">
+    <h3>Feedback Form</h3>
+    <form id="feedbackForm">
+      <label for="fbName">Name:</label>
+      <input type="text" id="fbName" name="fbName" placeholder="Your Name" required>
+
+      <label for="fbEmail">Email:</label>
+      <input type="email" id="fbEmail" name="fbEmail" placeholder="Your Email" required>
+
+      <label for="fbMessage">Message:</label>
+      <textarea id="fbMessage" name="fbMessage" placeholder="Your Feedback" rows="4" onkeyup="countChars(this)" required></textarea>
+
+      <p>Characters typed: <span id="charCount">0</span></p>
+
+      <button type="submit" onclick="submitFeedback(event)">Submit Feedback</button>
+    </form>
+
+    <button onclick="findLocation()">Find Nearby Events</button>
+    <p id="location"></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Local City Council. All rights reserved.
+  </footer>
+
+  <script>
+    function validatePhone(input) {
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(input.value)) {
+        alert("Invalid phone number. Must be 10 digits.");
+      }
+    }
+
+    function showConfirmation() {
+      document.getElementById("confirmation").innerText = "Thanks for registering!";
+    }
+
+    function enlarge(img) {
+      img.style.transform = "scale(1.5)";
+    }
+
+    function countChars(textarea) {
+      document.getElementById("charCount").innerText = textarea.value.length;
+    }
+
+    function videoReady() {
+      document.getElementById("videoMsg").innerText = "Video ready to play!";
+    }
+
+    function warnUser() {
+      return "Are you sure you want to leave? Your form data will be lost.";
+    }
+
+    function findLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            document.getElementById("location").innerText =
+              `Latitude: ${pos.coords.latitude}, Longitude: ${pos.coords.longitude}`;
+          },
+          (err) => {
+            document.getElementById("location").innerText =
+              `Error: ${err.message}`;
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000
+          }
+        );
+      } else {
+        alert("Geolocation is not supported.");
+      }
+    }
+
+    function savePreference(select) {
+      localStorage.setItem("preferredEvent", select.value);
+    }
+
+    function clearPreferences() {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("Preferences cleared.");
+    }
+
+    function submitFeedback(event) {
+      event.preventDefault();
+      alert("Thank you for your feedback!");
+      document.getElementById("feedbackForm").reset();
+      document.getElementById("charCount").innerText = "0";
+    }
+
+    window.onload = function () {
+      const saved = localStorage.getItem("preferredEvent");
+      if (saved) {
+        document.getElementById("eventType").value = saved;
+      }
+    }
+  </script>
+</body>
+</html>
