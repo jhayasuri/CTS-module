@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Event Portal</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <header>
+        <h1>Welcome to the Community Portal</h1>
+    </header>
+    <main>
+        <section id="controls">
+            <h2>Filter Events</h2>
+            <div class="filter-controls">
+                <label for="categoryFilter">Category:</label>
+                <select id="categoryFilter" onchange="filterEvents()">
+                    <option value="All">All Categories</option>
+                    <option value="Music">Music</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Arts">Arts</option>
+                </select>
+                <input type="text" id="eventSearch" placeholder="Search by name..." onkeydown="handleSearchKeydown(event)">
+            </div>
+        </section>
+
+        <section id="event-listing">
+            <h2>Upcoming Events</h2>
+            <div id="events-container">
+                <p id="loading-spinner" style="display: none;">Loading events...</p>
+                </div>
+        </section>
+
+        <section id="registration-form-section">
+            <h2>Register for an Event</h2>
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="registerEventName">Event Name:</label>
+                    <input type="text" id="registerEventName" name="eventName" required>
+                    <span id="eventNameError" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="userName">Your Name:</label>
+                    <input type="text" id="userName" name="userName" required>
+                    <span id="userNameError" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Your Email:</label>
+                    <input type="email" id="userEmail" name="userEmail" required>
+                    <span id="userEmailError" class="error-message"></span>
+                </div>
+                <button type="submit" id="registerBtn">Register</button>
+                <p id="registration-message"></p>
+            </form>
+        </section>
+
+        <section id="add-event-section">
+            <h2>Add New Event</h2>
+            <form id="add-event-form">
+                <div class="form-group">
+                    <label for="newEventName">Event Name:</label>
+                    <input type="text" id="newEventName" name="newEventName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEventDate">Date:</label>
+                    <input type="date" id="newEventDate" name="newEventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEventSeats">Total Seats:</label>
+                    <input type="number" id="newEventSeats" name="newEventSeats" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEventCategory">Category:</label>
+                    <input type="text" id="newEventCategory" name="newEventCategory" required>
+                </div>
+                <button type="submit">Add Event</button>
+                <p id="add-event-message"></p>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Community Portal. All rights reserved.</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>

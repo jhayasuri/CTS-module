@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Local Community Event Portal</title>
+
+  <style>
+    /* Task 1: Why CSS? - Embedded Styles for Body Background */
+    body {
+      background-color: #f5f5f5; /* A very light, clean gray for a premium feel */
+    }
+  </style>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body onbeforeunload="return warnUser()">
+
+  <nav>
+    <ul> <li><a href="#home">Home</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="help.html" target="_blank">Help</a></li>
+    </ul>
+  </nav>
+
+  <section id="home">
+    <div id="welcomeBanner">
+      Welcome to the Local Community Event Portal!
+      <br>
+      <span style="color: #FF6F6F; font-weight: bold;">Special Offer: Exclusive access for first 100 registrations!</span>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2 style="color: #A03444;">Community Event Gallery</h2>
+
+    <div class="event-gallery">
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event1.jpg" alt="Music Night" title="Music Night" ondblclick="enlarge(this)">
+      </div>
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event2.jpg" alt="Food Fest" title="Food Fest" ondblclick="enlarge(this)">
+      </div>
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event3.jpg" alt="Art Fair" title="Art Fair" ondblclick="enlarge(this)">
+      </div>
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event4.jpg" alt="Tech Meetup" title="Tech Meetup" ondblclick="enlarge(this)">
+      </div>
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event5.jpg" alt="Book Club" title="Book Club" ondblclick="enlarge(this)">
+      </div>
+      <div class="eventCard-container">
+        <img class="event eventCard" src="event6.jpg" alt="Charity Run" title="Charity Run" ondblclick="enlarge(this)">
+      </div>
+    </div>
+    <h3>Event Registration</h3>
+    <form onsubmit="showConfirmation(); return false;">
+      <label for="regName">Name:</label>
+      <input type="text" id="regName" placeholder="Your Name" required autofocus>
+      <label for="regEmail">Email:</label>
+      <input type="email" id="regEmail" placeholder="Email Address" required>
+      <label for="regDate">Date:</label>
+      <input type="date" id="regDate" required>
+      <label for="eventType">Event Type:</label>
+      <select id="eventType" onchange="savePreference(this)">
+        <option value="">Select Event Type</option>
+        <option value="Music">Music</option>
+        <option value="Food">Food</option>
+        <option value="Tech">Tech</option>
+        <option value="Art">Art</option>
+        <option value="Charity">Charity</option>
+      </select>
+      <label for="regMessage">Message:</label>
+      <textarea id="regMessage" placeholder="Your Message"></textarea>
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" placeholder="e.g., 1234567890" onblur="validatePhone(this)">
+      <output id="confirmation"></output><br>
+      <button type="submit">Register</button>
+      <button type="button" onclick="clearPreferences()">Clear Preferences</button>
+    </form>
+  </section>
+
+  <section>
+    <h3>Watch Our Event Promo</h3>
+    <video controls oncanplay="videoReady()">
+      <source src="promo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div id="videoMsg"></div>
+  </section>
+
+  <section id="news-article">
+    <h3>Community News Bulletin</h3>
+    <div class="news-content">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <p>
+        Nunc pulvinar sapien et ligula ullamcorper. Dignissim suspendisse in est ante in. Eget egestas purus viverra accumsan in nisl nisi. Vitae elementum curabitur vitae nunc sed velit dignissim sodales ut. Non sodales neque sodales ut etiam sit amet.
+      </p>
+      <p>
+        Vitae elementum curabitur vitae nunc sed velit dignissim sodales ut. Non sodales neque sodales ut etiam sit amet. Malesuada fames ac turpis egestas integer eget aliquet.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h3>Feedback Form</h3>
+    <form id="feedbackForm">
+      <label for="fbName">Name:</label>
+      <input type="text" id="fbName" name="fbName" placeholder="Your Name" required>
+
+      <label for="fbEmail">Email:</label>
+      <input type="email" id="fbEmail" name="fbEmail" placeholder="Your Email" required>
+
+      <label for="fbMessage">Message:</label>
+      <textarea id="fbMessage" name="fbMessage" placeholder="Your Feedback" rows="4" onkeyup="countChars(this)" required></textarea>
+
+      <p>Characters typed: <span id="charCount">0</span></p>
+
+      <button type="submit" onclick="submitFeedback(event)">Submit Feedback</button>
+    </form>
+
+    <button class="action-button" onclick="findLocation()">Find Nearby Events</button>
+    <p id="location"></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Local City Council. All rights reserved.
+  </footer>
+
+  <script>
+    function validatePhone(input) {
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(input.value)) {
+        alert("Invalid phone number. Must be 10 digits.");
+      }
+    }
+
+    function showConfirmation() {
+      document.getElementById("confirmation").innerText = "Thanks for registering!";
+    }
+
+    function enlarge(img) {
+      // Task 8: Box Model & Layout Control - Compare visibility: hidden vs. display: none (illustrative)
+      // To demonstrate, you might toggle these based on a condition or button click.
+      // img.style.display = 'none'; // Hides the element and removes it from the document flow
+      // img.style.visibility = 'hidden'; // Hides the element but it still occupies space
+      img.style.transform = "scale(1.5)";
+    }
+
+    function countChars(textarea) {
+      document.getElementById("charCount").innerText = textarea.value.length;
+    }
+
+    function videoReady() {
+      document.getElementById("videoMsg").innerText = "Video ready to play!";
+    }
+
+    function warnUser() {
+      return "Are you sure you want to leave? Your form data will be lost.";
+    }
+
+    function findLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            document.getElementById("location").innerText =
+              `Latitude: ${pos.coords.latitude}, Longitude: ${pos.coords.longitude}`;
+          },
+          (err) => {
+            document.getElementById("location").innerText =
+              `Error: ${err.message}`;
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }
+
+    function savePreference(select) {
+      localStorage.setItem("preferredEvent", select.value);
+    }
+
+    function clearPreferences() {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("Preferences cleared.");
+    }
+
+    function submitFeedback(event) {
+      event.preventDefault();
+      alert("Thank you for your feedback!");
+      document.getElementById("feedbackForm").reset();
+      document.getElementById("charCount").innerText = "0";
+    }
+
+    window.onload = function () {
+      const saved = localStorage.getItem("preferredEvent");
+      if (saved) {
+        document.getElementById("eventType").value = saved;
+      }
+    }
+  </script>
+</body>
+</html>
